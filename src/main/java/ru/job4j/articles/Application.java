@@ -16,7 +16,7 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class.getSimpleName());
 
     /* Объявление константы TARGET_COUNT с значением 1_000_000. */
-    public static final int TARGET_COUNT = 500_000;
+    public static final int TARGET_COUNT = 1_000_000;
 
     public static void main(String[] args) {
         /* Подгрузка properties для дальнейшей работы с БД */

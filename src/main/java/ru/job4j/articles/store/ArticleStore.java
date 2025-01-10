@@ -77,9 +77,8 @@ public class ArticleStore implements Store<Article>, AutoCloseable {
     public void saveAll(List<Article> articles) {
         LOGGER.info("Сохранение списка статей, количество: {}", articles.size());
         String sql = "INSERT INTO articles(text) VALUES(?)";
-        final int batchSize = 1000; // Оптимальный размер пакета
+        final int batchSize = 1000;
         int count = 0;
-
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (Article article : articles) {
                 statement.setString(1, article.getText());
@@ -89,9 +88,8 @@ public class ArticleStore implements Store<Article>, AutoCloseable {
                     LOGGER.info("Выполнен пакетный запрос для {} статей", count);
                 }
             }
-            statement.executeBatch(); // Выполняем оставшиеся запросы
+            statement.executeBatch();
             LOGGER.info("Выполнен финальный пакетный запрос для {} статей", count);
-            // Обработка сгенерированных ключей...
         } catch (SQLException e) {
             LOGGER.error("Ошибка при сохранении списка статей: {}", e.getMessage(), e);
             throw new IllegalStateException("Не удалось сохранить статьи в базу данных.", e);
